@@ -17,10 +17,24 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
+    const { id } = req.params;
+    db.select('*').from('accounts').where({id})
+        .then(account => {
+            if (account[0]) {
+                res.status(200).json(account);
+            }
+            else {
+                res.status(404).json({message: "No account found with specified id"})
+            }
+        })
+        .catch(err => {
+            res.status(500).json({error: "Cannot locate account"})
+        })
 
 });
 
 router.post('/', (req, res) => {
+    db('accounts')
 
 });
 
